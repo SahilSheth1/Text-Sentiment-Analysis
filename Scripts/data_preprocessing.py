@@ -73,8 +73,8 @@ def save_fasttext_data(positive_reviews, negative_reviews, output_file):
     print(f"Negative reviews: {len(negative_reviews)}")
 
 def main():
-    DATASET_PATH = '../IMDBMovieDataset/'
-    OUTPUT_FILE = '../Dataset/imdb_movie.txt'
+    DATASET_PATH = 'IMDBMovieDataset'
+    OUTPUT_FILE = 'Datasets/imdb_movie.txt'
     
     positive_reviews, negative_reviews = load_imdb_reviews(DATASET_PATH)
     

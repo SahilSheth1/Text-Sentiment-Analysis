@@ -64,16 +64,6 @@ def save_model(
     model: fasttext.FastText._FastText, 
     file_path: str
 ) -> bool:
-    """
-    Save a FastText model to a specified file path.
-    
-    Args:
-        model (fasttext.FastText._FastText): The trained FastText model
-        file_path (str): Full path where the model should be saved
-    
-    Returns:
-        bool: True if model was saved successfully, False otherwise
-    """
     logger = setup_logging()
     
     try:
@@ -87,15 +77,6 @@ def save_model(
 def load_model(
     file_path: str
 ) -> Optional[fasttext.FastText._FastText]:
-    """
-    Load a FastText model from a specified file path.
-    
-    Args:
-        file_path (str): Full path to the model file
-    
-    Returns:
-        Optional[fasttext.FastText._FastText]: Loaded model or None if loading fails
-    """
     logger = setup_logging()
     
     try:
