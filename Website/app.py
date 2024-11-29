@@ -13,7 +13,6 @@ if not os.path.exists(MODEL_PATH):
     print("Current directory contents:", os.listdir(os.path.dirname(MODEL_PATH)))
     raise FileNotFoundError(f"Model file not found at {MODEL_PATH}")
 
-# Load the model
 model = fasttext.load_model(MODEL_PATH)
 
 @app.route('/predict', methods=['POST'])
