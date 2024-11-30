@@ -4,7 +4,7 @@ import fasttext
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/predict": {"origins": "*"}})
 
 MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sentiment_classifier.bin')
 
@@ -15,9 +15,12 @@ if not os.path.exists(MODEL_PATH):
 
 model = fasttext.load_model(MODEL_PATH)
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST', 'OPTIONS'])
 def predict_sentiment():
-    data = request.get_json()
+    if request.method == 'OPTIONS':
+        return '', 204
+
+    data = request.get_json(force=True)
     text = data.get('text', '').strip()
     
     prediction = model.predict(text)
@@ -31,4 +34,4 @@ def predict_sentiment():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=8000)
