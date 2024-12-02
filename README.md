@@ -2,7 +2,10 @@
 Designing a NLP Text Sentiment Analysis Model
 
 ## Languages Used
-Python
+- Python
+- HTML
+- CSS
+- JavaScript
 
 To Download Python, click [here](https://www.python.org/downloads/)
 
@@ -41,6 +44,16 @@ pip install nltk
 Install Argparse Library:
 ```
 pip install argparse
+```
+
+Install Flask:
+```
+pip install flask
+```
+
+Install Flask-Cors:
+```
+pip install flask-cors
 ```
 
 ## Preprocess The Dataset
@@ -89,3 +102,25 @@ Perform Cross-Validation to ensure the FastText Model Generalizes Well
 
 ## Save and Load the FastText Model
 Save the FastText Model and load when needed
+
+## Website Development:
+Flask is used in the backend and HTML, CSS, and JavaScript are used for the front end.
+
+## Project Structure:
+- Root Website
+  - app.py -  Flask Application
+  - templates/
+    - index.html - Webpage
+    - styles.css - Webpage Stying
+    - script.js - Website scripting
+  - requirements.txt - File for easy package installation
+  - sentiment_classifier.bin - FastText Model
+
+## Flask Backend:
+Backend can handle http requests and also integrates FastText Model to webpage
+
+## HTML Frontend:
+This is where the user interface is designed
+
+## Webpage Styling:
+For better UI and functionality, CSS and JavaScript are used to enhance the webpage
