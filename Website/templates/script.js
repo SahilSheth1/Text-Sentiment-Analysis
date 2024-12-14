@@ -8,20 +8,40 @@ const charCountDisplay = document.getElementById('char-count');
 const resultSection = document.getElementById('result');
 
 const API_ENDPOINT = 'http://localhost:8000/predict';
+const MAX_CHARACTERS = 5000;
+
+function sanitizeText(text) {
+    // Remove extra whitespace and trim
+    return text.replace(/\s+/g, ' ').trim();
+}
 
 function updateTextStats() {
-    const text = textInput.value.trim();
+    const rawText = textInput.value;
+    const text = sanitizeText(rawText);
     
+    // Count words, handling multiple spaces and trims
     const wordCount = text ? text.split(/\s+/).length : 0;
     wordCountDisplay.textContent = `${wordCount} word${wordCount !== 1 ? 's' : ''}`;
 
-    const charCount = text.length;
-    charCountDisplay.textContent = `${charCount} / 5000 characters`;
+    // Trim to max characters if exceeded
+    if (text.length > MAX_CHARACTERS) {
+        textInput.value = text.slice(0, MAX_CHARACTERS);
+    }
 
-    analyzeBtn.disabled = charCount === 0 || charCount > 5000;
+    const charCount = Math.min(text.length, MAX_CHARACTERS);
+    charCountDisplay.textContent = `${charCount} / ${MAX_CHARACTERS} characters`;
+
+    // Disable button if no text or text too long
+    analyzeBtn.disabled = charCount === 0 || charCount > MAX_CHARACTERS;
 }
 
 textInput.addEventListener('input', updateTextStats);
+
+// Add paste event listener to handle large pastes
+textInput.addEventListener('paste', (e) => {
+    // Defer the check to allow the paste to complete
+    setTimeout(updateTextStats, 0);
+});
 
 async function analyzeSentiment(text) {
     try {
@@ -30,7 +50,7 @@ async function analyzeSentiment(text) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ text: text })
+            body: JSON.stringify({ text: sanitizeText(text) })
         });
 
         if (!response.ok) {
@@ -63,7 +83,7 @@ async function analyzeSentiment(text) {
 }
 
 analyzeBtn.addEventListener('click', async () => {
-    const text = textInput.value.trim();
+    const text = sanitizeText(textInput.value);
     
     if (!text) {
         alert('Please enter some text to analyze');
